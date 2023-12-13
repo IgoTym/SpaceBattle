@@ -1,0 +1,109 @@
+html {
+    font-size: 10px;
+
+}
+
+body {
+    width: 1280px;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    background-color: black;
+}
+
+body .menu {
+    align-self: center;
+}
+
+body h1 {
+    align-self: center;
+}
+
+h1 {
+    text-align: center;
+    font-size: 5em;
+    color: white; 
+    margin: 2em 0em 1em 0em;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.score {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    font-family: inherit;
+    font-size: 2em;
+    
+    width: 40em;
+    border: 0.1em solid black;
+    border-radius: 0.5em;
+    margin: 1em auto;
+    
+}
+
+.menu-button {
+    font-family: inherit;
+    font-size: 2em;
+    text-align: center;
+
+    box-sizing: border-box;
+    border: 0.1em solid black;
+    border-radius: 0.5em;
+
+    margin: 1em auto;
+    padding: 0.5em;
+    width: 10em;
+    height: 3em;
+}
+
+#go-back {
+    width: 3em;
+    height: 3em;
+    position: absolute;
+    top: 5em;
+    border-radius: 0.5em;
+    z-index: 1;
+}
+
+#display {
+    width: 640px;
+    height: 200px;
+    
+}
+
+.counter {
+    z-index: 1;
+    color: white;
+    font-size: 3em;
+    margin: 0 0;
+}
+
+#score-count {
+    position: absolute;
+    top: 3em;
+    right: 3em;
+   
+}
+
+#lives-count {
+    position: absolute;
+    top: 3em;
+    left: 3em;
+}
+
+#pause-flasher {
+    position: absolute;
+    top: 4em;
+    left: 9em;
+    margin: 0 0;
+    font-size: 7em;
+    color: white;
+    z-index: 1;
+}

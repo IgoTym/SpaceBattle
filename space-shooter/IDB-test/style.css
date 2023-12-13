@@ -1,0 +1,70 @@
+html {
+    font-size: 10px;
+
+}
+
+body {
+    width: 1280px;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+body .menu {
+    align-self: center;
+}
+
+body h1 {
+    align-self: center;
+}
+
+h1 {
+    text-align: center;
+    font-size: 5em;
+    margin: 2em 0em 1em 0em;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.score {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    font-family: inherit;
+    font-size: 2em;
+    
+    width: 40em;
+    border: 0.1em solid black;
+    border-radius: 0.5em;
+    margin: 1em auto;
+    
+}
+
+.menu-button {
+    font-family: inherit;
+    font-size: 2em;
+    text-align: center;
+
+    box-sizing: border-box;
+    border: 0.1em solid black;
+    border-radius: 0.5em;
+
+    margin: 1em auto;
+    padding: 0.5em;
+    width: 10em;
+    height: 3em;
+}
+
+#go-back {
+    width: 3em;
+    height: 3em;
+    position: absolute;
+    top: 5em;
+    border-radius: 0.5em;
+}
