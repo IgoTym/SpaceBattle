@@ -1,5 +1,5 @@
 # SpaceBattle
-My learning project
+My learning project, game inspired by the Space Invaders (feel free to take a look)
 ## Description
 This is a learning project I have been wroking on for nine months already, that serves a purely educational role. I created it to improve my practical JavaScript skills. The project is written in clear JS because I decided that before moving on to TypeScript and React.js, I needed a deeper understanding of the language.
 --
