@@ -1,7 +1,5 @@
 //Notes
 
-//Ustawić stopInterval - bez tego podczas pauzy klocki wciąż się generują
-
 //CLASSES
 
 //Menu Classes
@@ -9,73 +7,7 @@
 import { Menu } from "/Menu/Classes/Menu.js";
 import { MainMenu } from "/Menu/Classes/MainMenu.js";
 import { SetupGameMenu } from "/Menu/Classes/SetupGameMenu.js";
-
-//---------------------------------
-
-
-
-//---------------------------------
-
-
-
-
-//---------------------------------
-
-class ControlsMenu extends Menu {
-
-    constructor(name) {
-        super(name);
-    }
-
-
-    setupMenu() {
-
-        headline.textContent = "Controls";
-
-        const leftBtn = document.createElement("button");
-        const fireBtn = document.createElement("button");
-        const rightBtn = document.createElement("button");
-        const backBtn = document.createElement("button");
-        const canvas  = document.createElement("canvas");
-
-        backBtn.setAttribute("id", "go-back");
-        leftBtn.setAttribute("id", "move-left");
-        fireBtn.setAttribute("id", "fire");
-        rightBtn.setAttribute("id", "move-right");
-        canvas.setAttribute("id", "display");
-        canvas.setAttribute("class", "canvas");
-
-        canvas.setAttribute("width", "640");
-        canvas.setAttribute("height", "200");
-
-        backBtn.textContent = "⬅️";
-        leftBtn.textContent = "⬅️";
-        fireBtn.textContent = "SPACE";
-        rightBtn.textContent = "➡️";
-
-        const elements = [leftBtn, fireBtn, rightBtn];
-
-        for (const element of elements) {
-            element.setAttribute("class", "controls-button");
-            menu.appendChild(element);
-        }
-
-        document.body.appendChild(canvas);
-
-        document.body.appendChild(backBtn);
-
-        backBtn.addEventListener("click", clearAnyMenu);
-
-        moveLeft = document.querySelector("#move-left");
-        fire = document.querySelector("#fire");
-        moveRight = document.querySelector("#move-right");
-        canvasDisplay = document.querySelector("#display");
-        goBack = document.querySelector("#go-back");
-
-        drawControls();
-
-    }
-}
+import { ControlsMenu } from "/Menu/Classes/ControlsMenu.js";
 
 //---------------------------------
 
@@ -232,7 +164,6 @@ class OptionsMenu extends Menu {
 
         musicSetting = document.querySelector("#music-setting");
         soundSetting = document.querySelector("#sound-setting");
-        goBack = document.querySelector("#go-back");
 
     }
 
@@ -409,11 +340,11 @@ class Spaceship {
 
     checkBounds() {
 
-        if((this.x + 100) >= canvasDisplay.width) {
+        if ((this.x + 100) >= canvasDisplay.width) {
             this.x -= this.velX;
         }
 
-        if(this.x <= 0) {
+        if (this.x <= 0) {
             this.x += this.velX;
         }
     }
@@ -542,14 +473,14 @@ export { menu, headline, menuMusic };
 
 //Starter screen Variables
 
-let play = document.querySelector("#play");
+const play = document.querySelector("#play");
 
 //Main Menu Variables
 
-let startGame = document.querySelector("#start-game");
-let controls = document.querySelector("#controls");
-let scoreboard = document.querySelector("#scoreboard");
-let options = document.querySelector("#options");
+const startGame = document.querySelector("#start-game");
+const controls = document.querySelector("#controls");
+const scoreboard = document.querySelector("#scoreboard");
+const options = document.querySelector("#options");
 
 export { startGame, controls, scoreboard, options};
 
@@ -563,12 +494,12 @@ let newGame = document.querySelector("#play-game-button");
 
 //Controls Menu Variables
 
-let moveLeft; 
-let fire; 
-let moveRight;
-let goBack = document.querySelector("#go-back");
+const moveLeft = document.querySelector("#move-left"); 
+const fire = document.querySelector("#fire") ; 
+const moveRight = document.querySelector("#move-right");
+const goBack = document.querySelector("#go-back");
 
-export {goBack};
+export { moveLeft, fire, moveRight, goBack};
 
 
 //Scoreboard Menu Variables
@@ -602,7 +533,7 @@ let soundOn = 1;
 
 //Game screen Variables
 
-let canvasDisplay = 0;
+let canvasDisplay = document.querySelector("#display");
 let scoreCount = 0;
 let score = 0;
 let livesCount = 0;
@@ -759,6 +690,8 @@ function drawControls() {
     requestAnimationFrame(drawControls);
 
 }
+
+export { drawControls };
 
 //Create block object
 
