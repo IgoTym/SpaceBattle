@@ -23,6 +23,7 @@ class ControlsMenu extends Menu {
         fireBtn.setAttribute("id", "fire");
         rightBtn.setAttribute("id", "move-right");
         canvas.setAttribute("id", "display");
+        canvas.setAttribute("class", "canvas");
 
         canvas.setAttribute("width", "640");
         canvas.setAttribute("height", "200");
