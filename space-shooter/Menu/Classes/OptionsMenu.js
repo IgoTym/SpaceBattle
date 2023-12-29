@@ -1,12 +1,7 @@
-import { Menu } from "./Menu.js";
-import { headline, menu, menuMusic, clearAnyMenu } from "../../main.js";
-
 class OptionsMenu extends Menu {
 
     constructor(name) {
         super(name);
-        this.musciOn = 1;
-        this.soundOn = 1;
     }
 
 
@@ -22,18 +17,13 @@ class OptionsMenu extends Menu {
         sound.setAttribute("id", "sound-setting");
         backBtn.setAttribute("id", "go-back");
 
-        if (this.musicOn === 0) {
+        if (musicOn === 0) {
             music.textContent = "Music OFF";
         } else {
             music.textContent = "Music ON";
         }
 
-        if (this.soundOn === 0) {
-            sound.textContent = "Sound OFF";
-        } else {
-            sound.textContent = "Sound ON";
-        }
-
+        sound.textContent = "Sound ON";
         backBtn.textContent = "⬅️";
 
         const elements = [music, sound];
@@ -42,40 +32,41 @@ class OptionsMenu extends Menu {
             element.setAttribute("class", "menu-button");
             menu.appendChild(element);
         }
-
         document.body.appendChild(backBtn);
 
         music.addEventListener("click", () => {
-            if (this.musicOn === 0) {
+            if (musicOn === 0) {
                 music.textContent = "Music ON";
                 menuMusic.play();
-                this.musicOn = 1;
+                musicOn = 1;
 
             } else {
                 music.textContent = "Music OFF";
                 menuMusic.pause();
-                this.musicOn = 0;
+                musicOn = 0;
             }
         });
 
         sound.addEventListener("click", () => {
-            if (this.soundOn === 0) {
+            if (soundOn === 0) {
                 sound.textContent = "Sound ON";
                 //Place for a sound control function
-                this.soundOn = 1;
+                soundOn = 1;
 
             } else {
                 sound.textContent = "Sound OFF";
                 //Place for a sound control function
-                this.soundOn = 0;
+                soundOn = 0;
 
             }
         });
 
         backBtn.addEventListener("click", clearAnyMenu);
 
+        musicSetting = document.querySelector("#music-setting");
+        soundSetting = document.querySelector("#sound-setting");
+        goBack = document.querySelector("#go-back");
+
     }
 
 }
-
-export { OptionsMenu };

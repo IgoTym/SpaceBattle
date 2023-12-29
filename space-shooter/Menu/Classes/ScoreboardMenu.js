@@ -1,6 +1,3 @@
-import { Menu } from "./Menu.js";
-import { menu, headline, clearAnyMenu } from "../../main.js";
-
 class ScoreboardMenu extends Menu {
 
     constructor (name) {
@@ -59,7 +56,7 @@ class ScoreboardMenu extends Menu {
         document.body.appendChild(backBtn);
         backBtn.addEventListener("click", clearAnyMenu);
 
-        /*firstPlace = document.querySelector("#first-place");
+        firstPlace = document.querySelector("#first-place");
         firstPlaceName = document.querySelector("#first-name");
         firstPlaceScore = document.querySelector("#first-score");
 
@@ -76,7 +73,7 @@ class ScoreboardMenu extends Menu {
         //firstPlaceName.textContent = "Adam";
         //firstPlaceScore.textContent = 90;
 
-        //displayScore();*/
+        //displayScore();
 
         
 
@@ -84,5 +81,3 @@ class ScoreboardMenu extends Menu {
 
 
 }
-
-export { ScoreboardMenu };
