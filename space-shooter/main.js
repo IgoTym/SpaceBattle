@@ -8,166 +8,10 @@ import { Menu } from "/Menu/Classes/Menu.js";
 import { MainMenu } from "/Menu/Classes/MainMenu.js";
 import { SetupGameMenu } from "/Menu/Classes/SetupGameMenu.js";
 import { ControlsMenu } from "/Menu/Classes/ControlsMenu.js";
+import { ScoreboardMenu } from "/Menu/Classes/ScoreboardMenu.js";
+import { OptionsMenu } from "/Menu/Classes/OptionsMenu.js";
 
 //---------------------------------
-
-class ScoreboardMenu extends Menu {
-
-    constructor (name) {
-        super(name);
-    }
-
-    
-    setupMenu() {
-
-        headline.textContent = "Scoreboard";
-
-        const ftPlace = document.createElement("div");
-        const secPlace = document.createElement("div");
-        const thdPlace = document.createElement("div");
-        
-        ftPlace.setAttribute("id", "first-place");
-        secPlace.setAttribute("id", "second-place");
-        thdPlace.setAttribute("id", "third-place");
-        
-        const elements = [ftPlace, secPlace, thdPlace];
-
-        for (const element of elements) {
-            element.setAttribute("class", "score");
-            menu.appendChild(element);
-        }
-
-        const firstName = document.createElement("p");
-        const secondName = document.createElement("p");
-        const thirdName = document.createElement("p");
-
-        firstName.setAttribute("id", "first-name");
-        secondName.setAttribute("id", "second-name");
-        thirdName.setAttribute("id", "third-name");
-
-        const firstScore = document.createElement("p");
-        const secondScore = document.createElement("p");
-        const thirdScore = document.createElement("p");
-
-        firstScore.setAttribute("id", "first-score");
-        secondScore.setAttribute("id", "second-score");
-        thirdScore.setAttribute("id", "third-score");
-
-        ftPlace.appendChild(firstName);
-        ftPlace.appendChild(firstScore);
-
-        secPlace.appendChild(secondName);
-        secPlace.appendChild(secondScore);
-
-        thdPlace.appendChild(thirdName);
-        thdPlace.appendChild(thirdScore);
-
-        const backBtn = document.createElement("button");
-        backBtn.setAttribute("id", "go-back");
-        backBtn.textContent = "⬅️"
-
-        document.body.appendChild(backBtn);
-        backBtn.addEventListener("click", clearAnyMenu);
-
-        firstPlace = document.querySelector("#first-place");
-        firstPlaceName = document.querySelector("#first-name");
-        firstPlaceScore = document.querySelector("#first-score");
-
-        secondPlace = document.querySelector("#second-place");
-        secondPlaceName = document.querySelector("#second-name");
-        secondPlaceScore = document.querySelector("#second-score");
-
-        thirdPlace = document.querySelector("#third-place");
-        thirdPlaceName = document.querySelector("#third-name");
-        thirdPlaceScore = document.querySelector("#third-score");
-
-        goBack = document.querySelector("#go-back");
-
-        //firstPlaceName.textContent = "Adam";
-        //firstPlaceScore.textContent = 90;
-
-        //displayScore();
-
-        
-
-    }
-
-
-}
-
-//---------------------------------
-
-class OptionsMenu extends Menu {
-
-    constructor(name) {
-        super(name);
-    }
-
-
-    setupMenu() {
-
-        headline.textContent = "Options";
-
-        const music = document.createElement("button");
-        const sound = document.createElement("button");
-        const backBtn = document.createElement("button");
-
-        music.setAttribute("id", "music-setting");
-        sound.setAttribute("id", "sound-setting");
-        backBtn.setAttribute("id", "go-back");
-
-        if (musicOn === 0) {
-            music.textContent = "Music OFF";
-        } else {
-            music.textContent = "Music ON";
-        }
-
-        sound.textContent = "Sound ON";
-        backBtn.textContent = "⬅️";
-
-        const elements = [music, sound];
-        
-        for (const element of elements) {
-            element.setAttribute("class", "menu-button");
-            menu.appendChild(element);
-        }
-        document.body.appendChild(backBtn);
-
-        music.addEventListener("click", () => {
-            if (musicOn === 0) {
-                music.textContent = "Music ON";
-                menuMusic.play();
-                musicOn = 1;
-
-            } else {
-                music.textContent = "Music OFF";
-                menuMusic.pause();
-                musicOn = 0;
-            }
-        });
-
-        sound.addEventListener("click", () => {
-            if (soundOn === 0) {
-                sound.textContent = "Sound ON";
-                //Place for a sound control function
-                soundOn = 1;
-
-            } else {
-                sound.textContent = "Sound OFF";
-                //Place for a sound control function
-                soundOn = 0;
-
-            }
-        });
-
-        backBtn.addEventListener("click", clearAnyMenu);
-
-        musicSetting = document.querySelector("#music-setting");
-        soundSetting = document.querySelector("#sound-setting");
-
-    }
-
-}
 
 //Canvas classes
 
@@ -191,7 +35,7 @@ class GameScreen {
         gameDisplay.setAttribute("width", "1280");
         gameDisplay.setAttribute("height", "640");
         document.body.appendChild(gameDisplay);
-        canvasDisplay = document.querySelector("#game-screen");
+        //canvasDisplay = document.querySelector("#game-screen");
 
         const scoreCounter = document.createElement("p");
         scoreCounter.setAttribute("id", "score-count");
@@ -340,6 +184,8 @@ class Spaceship {
 
     checkBounds() {
 
+        const canvasDisplay = document.querySelector(".canvas");
+
         if ((this.x + 100) >= canvasDisplay.width) {
             this.x -= this.velX;
         }
@@ -429,6 +275,8 @@ class Regular extends Block {
     }
 
     colisionDetection() {
+
+        const canvasDisplay = document.querySelector(".canvas");
 
         if (this.y > canvasDisplay.height) {
             this.exists = false;
@@ -533,7 +381,7 @@ let soundOn = 1;
 
 //Game screen Variables
 
-let canvasDisplay = document.querySelector("#display");
+let canvasDisplay;
 let scoreCount = 0;
 let score = 0;
 let livesCount = 0;
@@ -545,7 +393,7 @@ let pauseFlasherInterval;
 const bullets = [];
 const blocks = [];
 
-export {canvasDisplay, score, lives, pauseFlasher, pause, bullets, blocks};
+export { score, lives, pauseFlasher, pause, bullets, blocks };
 
 //FUNCTIONS
 
