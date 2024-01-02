@@ -1,9 +1,12 @@
-import { bullets } from "../../main.js";
+import { bullets, spaceshipGame, createBlock, pauseFlashing, drawGame } from "../../main.js";
+import { Bullet } from "./Bullet.js";
 
 class GameScreen {
     constructor(name) {
         this.name = name;
-        
+        this.pauseFlasherInterval;
+        this.pause = false;
+
     }
 
     setupScreen() {
@@ -14,6 +17,7 @@ class GameScreen {
 
         const gameDisplay = document.createElement("canvas");
         gameDisplay.setAttribute("id", "game-screen");
+        gameDisplay.setAttribute("class", "canvas");
         gameDisplay.setAttribute("width", "1280");
         gameDisplay.setAttribute("height", "640");
         document.body.appendChild(gameDisplay);
@@ -21,19 +25,24 @@ class GameScreen {
         const scoreCounter = document.createElement("p");
         scoreCounter.setAttribute("id", "score-count");
         scoreCounter.setAttribute("class", "counter");
+        scoreCounter.textContent = "Score 0";
         document.body.appendChild(scoreCounter);
-        scoreCount = document.querySelector("#score-count");
 
         const livesCounter = document.createElement("p");
         livesCounter.setAttribute("id", "lives-count");
         livesCounter.setAttribute("class", "counter");
         document.body.appendChild(livesCounter);
-        livesCount = document.querySelector("#lives-count");
 
         const pausePara = document.createElement("p");
         pausePara.setAttribute("id", "pause-flasher");
         document.body.appendChild(pausePara);
-        pauseFlasher = document.querySelector("#pause-flasher");
+
+        /*const backBtn = document.createElement("button");
+        backBtn.setAttribute("id", "go-back");
+        backBtn.textContent = "⬅️";
+        backBtn.addEventListener("click", clearAnyMenu);
+        document.body.appendChild(backBtn);
+        goBack = document.querySelector("#go-back");*/
 
         createBlock();
         let createBlockInterval = setInterval(createBlock, 3000);
@@ -49,18 +58,18 @@ class GameScreen {
 
                 case "Escape":
                     console.log("Escape pressed");
-                    if (!pause) {
-                        pause = true;
+                    if (!this.pause) {
+                        this.pause = true;
                         clearInterval(createBlockInterval);
                         createBlockInterval = 0;
-                        pauseFlasher.textContent = "Pause";
-                        pauseFlasherInterval = setInterval(pauseFlashing, 1000);
+                        pausePara.textContent = "Pause";
+                        this.pauseFlasherInterval = setInterval(pauseFlashing, 1000);
 
                     } else {
-                        pause = false;
-                        clearInterval(pauseFlasherInterval);
-                        pauseFlasher.textContent = "";
-                        pauseFlasherInterval = 0;
+                        this.pause = false;
+                        clearInterval(this.pauseFlasherInterval);
+                        pausePara.textContent = "";
+                        this.pauseFlasherInterval = 0;
                         createBlockInterval = setInterval(createBlock, 3000);
                         drawGame();
                     }
@@ -70,15 +79,6 @@ class GameScreen {
             
             
         });
-
-        
-
-        /*const backBtn = document.createElement("button");
-        backBtn.setAttribute("id", "go-back");
-        backBtn.textContent = "⬅️";
-        backBtn.addEventListener("click", clearAnyMenu);
-        document.body.appendChild(backBtn);
-        goBack = document.querySelector("#go-back");*/
 
     }
 
