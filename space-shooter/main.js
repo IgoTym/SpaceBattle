@@ -15,245 +15,10 @@ import { OptionsMenu } from "/Menu/Classes/OptionsMenu.js";
 
 //Canvas classes
 
-//---------------------------------
-
-class GameScreen {
-    constructor(name) {
-        this.name = name;
-        
-    }
-
-    setupScreen() {
-
-        while (document.body.firstChild) {
-            document.body.removeChild(document.body.firstChild);
-        }
-
-        const gameDisplay = document.createElement("canvas");
-        gameDisplay.setAttribute("id", "game-screen");
-        gameDisplay.setAttribute("class", "canvas");
-        gameDisplay.setAttribute("width", "1280");
-        gameDisplay.setAttribute("height", "640");
-        document.body.appendChild(gameDisplay);
-        //canvasDisplay = document.querySelector("#game-screen");
-
-        const scoreCounter = document.createElement("p");
-        scoreCounter.setAttribute("id", "score-count");
-        scoreCounter.setAttribute("class", "counter");
-        document.body.appendChild(scoreCounter);
-        scoreCount = document.querySelector("#score-count");
-
-        const livesCounter = document.createElement("p");
-        livesCounter.setAttribute("id", "lives-count");
-        livesCounter.setAttribute("class", "counter");
-        document.body.appendChild(livesCounter);
-        livesCount = document.querySelector("#lives-count");
-
-        const pausePara = document.createElement("p");
-        pausePara.setAttribute("id", "pause-flasher");
-        document.body.appendChild(pausePara);
-        pauseFlasher = document.querySelector("#pause-flasher");
-
-        createBlock();
-        let createBlockInterval = setInterval(createBlock, 3000);
-
-        window.addEventListener("keydown", (e) => {
-
-            switch (e.key) {
-
-                case " ":
-                    const bullet = new Bullet(spaceshipGame.x, spaceshipGame.y - 50, 10, 10, 10, "white");
-                    bullets.push(bullet);
-                    break;
-
-                case "Escape":
-                    console.log("Escape pressed");
-                    if (!pause) {
-                        pause = true;
-                        clearInterval(createBlockInterval);
-                        createBlockInterval = 0;
-                        pauseFlasher.textContent = "Pause";
-                        pauseFlasherInterval = setInterval(pauseFlashing, 1000);
-
-                    } else {
-                        pause = false;
-                        clearInterval(pauseFlasherInterval);
-                        pauseFlasher.textContent = "";
-                        pauseFlasherInterval = 0;
-                        createBlockInterval = setInterval(createBlock, 3000);
-                        drawGame();
-                    }
-                    break;
-
-            }
-            
-            
-        });
-
-        
-
-        /*const backBtn = document.createElement("button");
-        backBtn.setAttribute("id", "go-back");
-        backBtn.textContent = "⬅️";
-        backBtn.addEventListener("click", clearAnyMenu);
-        document.body.appendChild(backBtn);
-        goBack = document.querySelector("#go-back");*/
-
-    }
-
-
-    gameOver() {
-
-        const canvas = document.querySelector("canvas");
-        const ctx = canvas.getContext("2d");
-
-        const width = canvas.width;
-        const height = canvas.height;
-
-        ctx.fillStyle = "rgb(0, 0, 0)";
-        ctx.fillRect(0, 0, width, height);
-
-        ctx.fillStyle = "rgb(255, 255, 255)";
-        ctx.font = "90px serif";
-        ctx.fillText("Game over", 430, 400);
-
-    }
-
-}
-
-//---------------------------------
-
-class Spaceship {
-    constructor(x, y, width, height, velX, velY, bulletY, color) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.velX = velX;
-        this.velY = velY;
-        this.bulletY = bulletY;
-        this.bulletX = 0;
-        this.bulletStart = bulletY;
-        this.color = color;
-        this.bullet = false;
-
-        window.addEventListener("keydown", (e) => {
-
-            switch (e.key) {
-
-                case "ArrowRight":
-                    this.x += this.velX;
-                    break;
-
-                case "ArrowLeft":
-                    this.x -= this.velX;
-                    break;
-
-                /*case " ":
-                    this.bullet = true;
-                    break;*/
-            }
-        });
-
-    }
-
-    draw() {
-
-        const canvas = document.querySelector("canvas");
-        const ctx = canvas.getContext("2d");
-
-        const width = canvas.width;
-        const height = canvas.height;
-
-        ctx.fillStyle = "rgb(0, 0, 0)";
-        ctx.fillRect(0, 0, width, height);
-
-        ctx.beginPath();
-        ctx.moveTo(this.x, this.y);
-        ctx.lineTo(this.x + 100, this.y);
-        ctx.lineTo(this.x + 100, this.y - 25);
-        ctx.lineTo(this.x + 75, this.y - 25);
-        ctx.lineTo(this.x + 75, this.y - 50);
-        ctx.lineTo(this.x + 25, this.y - 50);
-        ctx.lineTo(this.x + 25, this.y - 25);
-        ctx.lineTo(this.x, this.y - 25);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-
-    }
-
-    checkBounds() {
-
-        const canvasDisplay = document.querySelector(".canvas");
-
-        if ((this.x + 100) >= canvasDisplay.width) {
-            this.x -= this.velX;
-        }
-
-        if (this.x <= 0) {
-            this.x += this.velX;
-        }
-    }
-
-}
-
-//---------------------------------
-
-class Block {
-    constructor(x, y, velY, width, height, color) {
-        this.x = x;
-        this.y = y;
-        this.velY = velY;
-        this.width = width;
-        this.height = height;
-        this.color = color;
-    }
-}
-
-//---------------------------------
-
-class Bullet extends Block {
-    constructor(x, y, velY, width, height, color) {
-        super(x, y, velY, width, height, color);
-        this.exists = true;
-    }
-
-    draw() {
-
-        const canvas = document.querySelector("canvas");
-        const ctx = canvas.getContext("2d");
-        
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x + 45, this.y, this.width, this.height);
-        this.y -= this.velY;
-
-    }
-
-    colisionDetection() {
-
-        for (const block of blocks) {
-            if (block.exists) {
-                const dx = this.x - block.x;
-                const dy = this.y - block.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-
-                if (distance < this.height + block.height) {
-                    block.exists = false;
-                    this.exists = false;
-                    score += 10;
-                
-                }
-            }
-        }
-
-        if (this.y <= 0) {
-            this.exists = false;
-
-        }
-
-    }
-
-}
+import { GameScreen } from "/Canvas/Classes/GameScreen.js";
+import { Spaceship } from "/Canvas/Classes/Spaceship.js";
+import { Block } from "/Canvas/Classes/Block.js";
+import { Bullet } from "/Canvas/Classes/Bullet.js";
 
 //---------------------------------
 
@@ -469,6 +234,7 @@ function random(min, max) {
 
 function updateScore() {
     const scoreCount = document.querySelector("#score-count");
+    score += 10;
     scoreCount.textContent = `Score ${score}`;
 }
 
@@ -485,7 +251,7 @@ function updateLives() {
 
 function pauseFlashing() {
 
-    const pausePara = pauseFlasher;
+    const pausePara = document.querySelector("#pause-flasher");
     
     if (pausePara.textContent === "Pause") {
         pausePara.textContent = "";
@@ -494,10 +260,11 @@ function pauseFlashing() {
     }
 }
 
+export { pauseFlashing, updateScore };
 
 function drawGame() {
 
-    if (!pause) {
+    if (!gameDisplay.pause) {
 
         spaceshipGame.draw();
         spaceshipGame.checkBounds();
@@ -516,7 +283,7 @@ function drawGame() {
             }
         }
         
-        updateScore();
+        //updateScore();
 
         requestAnimation = requestAnimationFrame(drawGame);
 
@@ -549,6 +316,8 @@ function createBlock() {
     blocks.push(block);
 
 }
+
+export { createBlock };
 
 //EVENT LISTENERS
 
