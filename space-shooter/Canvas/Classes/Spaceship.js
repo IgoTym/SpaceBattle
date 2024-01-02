@@ -1,3 +1,5 @@
+//import {  } from "../../main.js";
+
 class Spaceship {
     constructor(x, y, width, height, velX, velY, bulletY, color) {
         this.x = x;
@@ -10,7 +12,6 @@ class Spaceship {
         this.bulletX = 0;
         this.bulletStart = bulletY;
         this.color = color;
-        this.bullet = false;
 
         window.addEventListener("keydown", (e) => {
 
@@ -24,9 +25,6 @@ class Spaceship {
                     this.x -= this.velX;
                     break;
 
-                /*case " ":
-                    this.bullet = true;
-                    break;*/
             }
         });
 
@@ -59,13 +57,17 @@ class Spaceship {
 
     checkBounds() {
 
-        if((this.x + 100) >= canvasDisplay.width) {
+        const canvasDisplay = document.querySelector(".canvas");
+
+        if ((this.x + 100) >= canvasDisplay.width) {
             this.x -= this.velX;
         }
 
-        if(this.x <= 0) {
+        if (this.x <= 0) {
             this.x += this.velX;
         }
     }
 
 }
+
+export { Spaceship };
