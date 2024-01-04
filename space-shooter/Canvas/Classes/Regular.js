@@ -1,3 +1,6 @@
+import { Block } from "./Block.js";
+import { updateLives } from "../../main.js";
+
 class Regular extends Block {
     constructor(x, y, velY, width, height, color) {
         super(x, y, velY, width, height, color)
@@ -17,12 +20,16 @@ class Regular extends Block {
 
     colisionDetection() {
 
+        const canvasDisplay = document.querySelector(".canvas");
+
         if (this.y > canvasDisplay.height) {
             this.exists = false;
-            lives --;
+            updateLives();
             
         }
 
     }
 
 }
+
+export { Regular };
