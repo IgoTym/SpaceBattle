@@ -1,5 +1,7 @@
 //Notes
 
+//Change how the GameScreen method setupMenu clears the menus. It needs to hide them instead of deleting them
+
 //CLASSES
 
 //Menu Classes
@@ -19,40 +21,9 @@ import { GameScreen } from "/Canvas/Classes/GameScreen.js";
 import { Spaceship } from "/Canvas/Classes/Spaceship.js";
 import { Block } from "/Canvas/Classes/Block.js";
 import { Bullet } from "/Canvas/Classes/Bullet.js";
+import { Regular } from "/Canvas/Classes/Regular.js";
 
 //---------------------------------
-
-class Regular extends Block {
-    constructor(x, y, velY, width, height, color) {
-        super(x, y, velY, width, height, color)
-        this.exists = true;
-    }
-
-    draw() {
-
-        const canvas = document.querySelector("canvas");
-        const ctx = canvas.getContext("2d");
-
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-        this.y += this.velY;
-
-    }
-
-    colisionDetection() {
-
-        const canvasDisplay = document.querySelector(".canvas");
-
-        if (this.y > canvasDisplay.height) {
-            this.exists = false;
-            lives --;
-            
-        }
-
-    }
-
-}
-
 
 //OBJECTS
 
@@ -81,8 +52,9 @@ export { gameDisplay, spaceshipControls, spaceshipGame };
 const menu = document.querySelector("#main-menu");
 const headline = document.querySelector("h1");
 const menuMusic = document.querySelector("audio");
+const goBack = document.querySelector("#go-back");
 
-export { menu, headline, menuMusic };
+export { menu, headline, menuMusic, goBack };
 
 //Starter screen Variables
 
@@ -96,24 +68,6 @@ const scoreboard = document.querySelector("#scoreboard");
 const options = document.querySelector("#options");
 
 export { startGame, controls, scoreboard, options};
-
-//Start Game Menu Variables
-
-let difficultySetting = document.querySelector("#difficulty-setting");
-let specialBlocksSetting = document.querySelector("#special-blocks-setting");
-let difficultyDescription = document.querySelector("#difficulty-description");
-let specBlocksDescription = document.querySelector("#special-blocks-description");
-let newGame = document.querySelector("#play-game-button");
-
-//Controls Menu Variables
-
-const moveLeft = document.querySelector("#move-left"); 
-const fire = document.querySelector("#fire") ; 
-const moveRight = document.querySelector("#move-right");
-const goBack = document.querySelector("#go-back");
-
-export { moveLeft, fire, moveRight, goBack};
-
 
 //Scoreboard Menu Variables
 
@@ -129,36 +83,22 @@ let thirdPlace;
 let thirdPlaceName;
 let thirdPlaceScore;
 
-//Options Menu Variables
-
-let musicSetting;
-let soundSetting;
-
 //IndexedDB Variables
 
 let db;
 const openRequest = window.indexedDB.open("playerScore_db", 1);
 
-//Sound Variables
-
-let musicOn = 1;
-let soundOn = 1;
-
 //Game screen Variables
 
-let canvasDisplay;
-let scoreCount = 0;
 let score = 0;
-let livesCount = 0;
 let lives = 3;
 let requestAnimation;
 let pause = false;
 let pauseFlasher = 0;
-let pauseFlasherInterval;
 const bullets = [];
 const blocks = [];
 
-export { score, lives, pauseFlasher, pause, bullets, blocks };
+export { score, lives, pauseFlasher, pause, requestAnimation, bullets, blocks };
 
 //FUNCTIONS
 
@@ -186,7 +126,10 @@ function clearAnyMenu() {
             optionsMenu.clearMenu();
             break;
         
-        //Placeholder for Game Screen case
+        case "Game Display":
+            gameDisplay.clearMenu();
+            break;
+
     }
 
     mainMenu.setupMenu();
@@ -240,12 +183,8 @@ function updateScore() {
 
 function updateLives() {
     const livesCount = document.querySelector("#lives-count");
+    lives --;
     livesCount.textContent = `Lives x${lives}`;
-
-    if (lives === 0) {
-        cancelAnimationFrame(requestAnimation);
-        gameDisplay.gameOver();
-    }
 
 }
 
@@ -260,7 +199,7 @@ function pauseFlashing() {
     }
 }
 
-export { pauseFlashing, updateScore };
+export { pauseFlashing, updateScore, updateLives };
 
 function drawGame() {
 
@@ -282,12 +221,13 @@ function drawGame() {
                 bullet.draw();
             }
         }
-        
-        //updateScore();
 
         requestAnimation = requestAnimationFrame(drawGame);
 
-        updateLives();
+        if (lives === 0) {
+            cancelAnimationFrame(requestAnimation);
+            gameDisplay.gameOver();
+        }
 
     }
     
