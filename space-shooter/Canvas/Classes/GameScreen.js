@@ -1,4 +1,4 @@
-import { bullets, spaceshipGame, createBlock, pauseFlashing, drawGame } from "../../main.js";
+import { bullets, spaceshipGame, createBlock, pauseFlashing, drawGame, score, lives, clearAnyMenu, requestAnimation } from "../../main.js";
 import { Bullet } from "./Bullet.js";
 
 class GameScreen {
@@ -15,6 +15,11 @@ class GameScreen {
             document.body.removeChild(document.body.firstChild);
         }
 
+        const ghostHeadline = document.createElement("h1");
+        ghostHeadline.setAttribute("id", "ghost-headline");
+        ghostHeadline.textContent = "Game Display";
+        document.body.appendChild(ghostHeadline);
+
         const gameDisplay = document.createElement("canvas");
         gameDisplay.setAttribute("id", "game-screen");
         gameDisplay.setAttribute("class", "canvas");
@@ -25,12 +30,13 @@ class GameScreen {
         const scoreCounter = document.createElement("p");
         scoreCounter.setAttribute("id", "score-count");
         scoreCounter.setAttribute("class", "counter");
-        scoreCounter.textContent = "Score 0";
+        scoreCounter.textContent = `Score ${score}`;
         document.body.appendChild(scoreCounter);
 
         const livesCounter = document.createElement("p");
         livesCounter.setAttribute("id", "lives-count");
         livesCounter.setAttribute("class", "counter");
+        livesCounter.textContent = `Lives x${lives}`;
         document.body.appendChild(livesCounter);
 
         const pausePara = document.createElement("p");
@@ -40,9 +46,15 @@ class GameScreen {
         /*const backBtn = document.createElement("button");
         backBtn.setAttribute("id", "go-back");
         backBtn.textContent = "⬅️";
-        backBtn.addEventListener("click", clearAnyMenu);
-        document.body.appendChild(backBtn);
-        goBack = document.querySelector("#go-back");*/
+
+        backBtn.addEventListener("click", () => {
+
+            cancelAnimationFrame(requestAnimation);
+            clearAnyMenu();
+        
+        });
+
+        document.body.appendChild(backBtn);*/
 
         createBlock();
         let createBlockInterval = setInterval(createBlock, 3000);
