@@ -8,3 +8,5 @@ class Block {
         this.color = color;
     }
 }
+
+export { Block };

@@ -1,7 +1,5 @@
 //Notes
 
-//Ustawić stopInterval - bez tego podczas pauzy klocki wciąż się generują
-
 //CLASSES
 
 //Menu Classes
@@ -240,6 +238,16 @@ class OptionsMenu extends Menu {
 
 //Canvas classes
 
+
+import { GameScreen } from "/Canvas/Classes/GameScreen.js";
+import { Spaceship } from "/Canvas/Classes/Spaceship.js";
+import { Block } from "/Canvas/Classes/Block.js";
+import { Bullet } from "/Canvas/Classes/Bullet.js";
+import { Regular } from "/Canvas/Classes/Regular.js";
+
+//---------------------------------
+
+=======
 //---------------------------------
 
 class GameScreen {
@@ -510,6 +518,7 @@ class Regular extends Block {
 }
 
 
+
 //OBJECTS
 
 //Menu objects
@@ -537,8 +546,9 @@ export { gameDisplay, spaceshipControls, spaceshipGame };
 const menu = document.querySelector("#main-menu");
 const headline = document.querySelector("h1");
 const menuMusic = document.querySelector("audio");
+const goBack = document.querySelector("#go-back");
 
-export { menu, headline, menuMusic };
+export { menu, headline, menuMusic, goBack };
 
 //Starter screen Variables
 
@@ -552,6 +562,7 @@ let scoreboard = document.querySelector("#scoreboard");
 let options = document.querySelector("#options");
 
 export { startGame, controls, scoreboard, options};
+
 
 //Start Game Menu Variables
 
@@ -571,6 +582,7 @@ let goBack = document.querySelector("#go-back");
 export {goBack};
 
 
+
 //Scoreboard Menu Variables
 
 let firstPlace;
@@ -585,35 +597,26 @@ let thirdPlace;
 let thirdPlaceName;
 let thirdPlaceScore;
 
-//Options Menu Variables
-
-let musicSetting;
-let soundSetting;
-
 //IndexedDB Variables
 
 let db;
 const openRequest = window.indexedDB.open("playerScore_db", 1);
 
-//Sound Variables
-
-let musicOn = 1;
-let soundOn = 1;
-
 //Game screen Variables
+
 
 let canvasDisplay = 0;
 let scoreCount = 0;
 let score = 0;
-let livesCount = 0;
 let lives = 3;
 let requestAnimation;
 let pause = false;
 let pauseFlasher = 0;
-let pauseFlasherInterval;
 const bullets = [];
 const blocks = [];
 
+
+export { score, lives, pauseFlasher, pause, requestAnimation, bullets, blocks };
 export {canvasDisplay, score, lives, pauseFlasher, pause, bullets, blocks};
 
 //FUNCTIONS
@@ -642,7 +645,10 @@ function clearAnyMenu() {
             optionsMenu.clearMenu();
             break;
         
-        //Placeholder for Game Screen case
+        case "Game Display":
+            gameDisplay.clearMenu();
+            break;
+
     }
 
     mainMenu.setupMenu();
@@ -690,23 +696,20 @@ function random(min, max) {
 
 function updateScore() {
     const scoreCount = document.querySelector("#score-count");
+    score += 10;
     scoreCount.textContent = `Score ${score}`;
 }
 
 function updateLives() {
     const livesCount = document.querySelector("#lives-count");
+    lives --;
     livesCount.textContent = `Lives x${lives}`;
-
-    if (lives === 0) {
-        cancelAnimationFrame(requestAnimation);
-        gameDisplay.gameOver();
-    }
 
 }
 
 function pauseFlashing() {
 
-    const pausePara = pauseFlasher;
+    const pausePara = document.querySelector("#pause-flasher");
     
     if (pausePara.textContent === "Pause") {
         pausePara.textContent = "";
@@ -715,10 +718,11 @@ function pauseFlashing() {
     }
 }
 
+export { pauseFlashing, updateScore, updateLives };
 
 function drawGame() {
 
-    if (!pause) {
+    if (!gameDisplay.pause) {
 
         spaceshipGame.draw();
         spaceshipGame.checkBounds();
@@ -736,12 +740,13 @@ function drawGame() {
                 bullet.draw();
             }
         }
-        
-        updateScore();
 
         requestAnimation = requestAnimationFrame(drawGame);
 
-        updateLives();
+        if (lives === 0) {
+            cancelAnimationFrame(requestAnimation);
+            gameDisplay.gameOver();
+        }
 
     }
     
@@ -768,6 +773,8 @@ function createBlock() {
     blocks.push(block);
 
 }
+
+export { createBlock };
 
 //EVENT LISTENERS
 

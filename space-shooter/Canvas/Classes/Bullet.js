@@ -1,7 +1,11 @@
+import { Block } from "./Block.js";
+import { updateScore, blocks } from "../../main.js";
+
 class Bullet extends Block {
     constructor(x, y, velY, width, height, color) {
         super(x, y, velY, width, height, color);
         this.exists = true;
+
     }
 
     draw() {
@@ -26,7 +30,7 @@ class Bullet extends Block {
                 if (distance < this.height + block.height) {
                     block.exists = false;
                     this.exists = false;
-                    score += 10;
+                    updateScore();
                 
                 }
             }
@@ -40,3 +44,5 @@ class Bullet extends Block {
     }
 
 }
+
+export { Bullet };
