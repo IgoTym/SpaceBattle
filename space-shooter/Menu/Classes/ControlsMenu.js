@@ -1,6 +1,3 @@
-import {Menu} from "./Menu.js";
-import { headline, menu, drawControls, clearAnyMenu  } from "../../main.js";
-
 class ControlsMenu extends Menu {
 
     constructor(name) {
@@ -23,7 +20,6 @@ class ControlsMenu extends Menu {
         fireBtn.setAttribute("id", "fire");
         rightBtn.setAttribute("id", "move-right");
         canvas.setAttribute("id", "display");
-        canvas.setAttribute("class", "canvas");
 
         canvas.setAttribute("width", "640");
         canvas.setAttribute("height", "200");
@@ -46,9 +42,13 @@ class ControlsMenu extends Menu {
 
         backBtn.addEventListener("click", clearAnyMenu);
 
+        moveLeft = document.querySelector("#move-left");
+        fire = document.querySelector("#fire");
+        moveRight = document.querySelector("#move-right");
+        canvasDisplay = document.querySelector("#display");
+        goBack = document.querySelector("#go-back");
+
         drawControls();
 
     }
 }
-
-export { ControlsMenu };
