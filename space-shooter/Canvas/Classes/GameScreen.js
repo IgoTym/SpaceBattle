@@ -1,4 +1,3 @@
-
 import { bullets, spaceshipGame, createBlock, pauseFlashing, drawGame, score, lives, clearAnyMenu, requestAnimation } from "../../main.js";
 import { Bullet } from "./Bullet.js";
 
@@ -27,7 +26,6 @@ class GameScreen {
         gameDisplay.setAttribute("width", "1280");
         gameDisplay.setAttribute("height", "640");
         document.body.appendChild(gameDisplay);
-        canvasDisplay = document.querySelector("#game-screen");
 
         const scoreCounter = document.createElement("p");
         scoreCounter.setAttribute("id", "score-count");
@@ -115,3 +113,5 @@ class GameScreen {
     }
 
 }
+
+export { GameScreen };
