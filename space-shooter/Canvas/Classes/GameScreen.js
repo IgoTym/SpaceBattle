@@ -1,9 +1,12 @@
-import { bullets, spaceshipGame, createBlock, pauseFlashing, drawGame, score, lives, clearAnyMenu, requestAnimation } from "../../main.js";
+import { bullets, headline, spaceshipGame, createBlock, pauseFlashing, drawGame, score, lives, resetGame, menu } from "../../main.js";
 import { Bullet } from "./Bullet.js";
+import { Menu } from "../../Menu/Classes/Menu.js";
 
-class GameScreen {
+class GameScreen extends Menu {
     constructor(name) {
+        super(name);
         this.name = name;
+        this.createBlockInterval;
         this.pauseFlasherInterval;
         this.pause = false;
 
@@ -11,14 +14,12 @@ class GameScreen {
 
     setupScreen() {
 
-        while (document.body.firstChild) {
-            document.body.removeChild(document.body.firstChild);
+        while (menu.firstChild) {
+            menu.removeChild(menu.firstChild);
         }
 
-        const ghostHeadline = document.createElement("h1");
-        ghostHeadline.setAttribute("id", "ghost-headline");
-        ghostHeadline.textContent = "Game Display";
-        document.body.appendChild(ghostHeadline);
+        headline.setAttribute("id", "ghost-headline");
+        headline.textContent = "Game Display";
 
         const gameDisplay = document.createElement("canvas");
         gameDisplay.setAttribute("id", "game-screen");
@@ -57,7 +58,7 @@ class GameScreen {
         document.body.appendChild(backBtn);*/
 
         createBlock();
-        let createBlockInterval = setInterval(createBlock, 3000);
+        this.createBlockInterval = setInterval(createBlock, 3000);
 
         window.addEventListener("keydown", (e) => {
 
@@ -72,8 +73,8 @@ class GameScreen {
                     console.log("Escape pressed");
                     if (!this.pause) {
                         this.pause = true;
-                        clearInterval(createBlockInterval);
-                        createBlockInterval = 0;
+                        clearInterval(this.createBlockInterval);
+                        this.createBlockInterval = 0;
                         pausePara.textContent = "Pause";
                         this.pauseFlasherInterval = setInterval(pauseFlashing, 1000);
 
@@ -82,7 +83,7 @@ class GameScreen {
                         clearInterval(this.pauseFlasherInterval);
                         pausePara.textContent = "";
                         this.pauseFlasherInterval = 0;
-                        createBlockInterval = setInterval(createBlock, 3000);
+                        this.createBlockInterval = setInterval(createBlock, 3000);
                         drawGame();
                     }
                     break;
@@ -97,7 +98,7 @@ class GameScreen {
 
     gameOver() {
 
-        const canvas = document.querySelector("canvas");
+        /*const canvas = document.querySelector("canvas");
         const ctx = canvas.getContext("2d");
 
         const width = canvas.width;
@@ -108,7 +109,33 @@ class GameScreen {
 
         ctx.fillStyle = "rgb(255, 255, 255)";
         ctx.font = "90px serif";
-        ctx.fillText("Game over", 430, 400);
+        ctx.fillText("Game over", 430, 400);*/
+
+        clearInterval(this.createBlockInterval);
+
+        const gameOverScreen = document.createElement("div");
+        gameOverScreen.setAttribute("class", "menu");
+        gameOverScreen.setAttribute("id", "game-over-screen");
+
+        const gameOverPara = document.createElement("p");
+        gameOverPara.setAttribute("class", "final-para");
+        gameOverPara.textContent = "Game Over";
+
+        const finalScore = document.createElement("p");
+        finalScore.setAttribute("class", "final-para");
+        finalScore.textContent = score;
+
+        const restartButton = document.createElement("button");
+        restartButton.setAttribute("class", "menu-button");
+        restartButton.textContent = "Restart";
+        restartButton.addEventListener("click", resetGame);
+
+        const elements = [gameOverPara, finalScore, restartButton];
+
+        document.body.appendChild(gameOverScreen);
+        for (const element of elements) {
+            gameOverScreen.appendChild(element);
+        }
 
     }
 

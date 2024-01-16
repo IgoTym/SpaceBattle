@@ -235,6 +235,15 @@ function drawGame() {
 
 export { drawGame };
 
+function resetGame() {
+
+    gameDisplay.clearMenu();
+    setupGameMenu.setupMenu();
+
+}
+
+export { resetGame };
+
 //Controls Display
 
 function drawControls() {

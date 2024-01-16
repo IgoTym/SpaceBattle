@@ -12,6 +12,10 @@ class Menu {
 
         const button = document.querySelector("#go-back");
         const canvas = document.querySelector(".canvas");
+        const gameOverScreen = document.querySelector("#game-over-screen");
+        const livesCounter = document.querySelector("#lives-count");
+        const score = document.querySelector("#score-count");
+        const pauseFlasher =document.querySelector("#pause-flasher");
         headline.textContent = "";
 
         while (menu.firstChild) {
@@ -26,6 +30,15 @@ class Menu {
         if (canvas) {
             document.body.removeChild(canvas);
             
+        }
+
+        if (gameOverScreen) {
+            const elements = [gameOverScreen, livesCounter, score, pauseFlasher];
+            for (const element of elements) {
+                document.body.removeChild(element);
+            }
+            headline.removeAttribute("id");
+
         }
 
     }

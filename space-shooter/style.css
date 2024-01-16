@@ -116,3 +116,23 @@ h1 {
     color: white;
     z-index: 1;
 }
+
+#game-over-screen {
+    position: absolute;
+    z-index: 1;
+    background-color: black;
+    border: solid 5px white;
+    width: 90em;
+    height: 60em;
+    top: 4em;
+    margin: 0 0;
+    padding: 0;
+}
+
+.final-para {
+    font-size: 3em;
+    text-align: center;
+    color: white;
+    margin: 2em auto;
+    padding: 0;
+}
