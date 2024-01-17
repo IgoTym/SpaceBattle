@@ -235,6 +235,20 @@ function drawGame() {
 
 export { drawGame };
 
+function resetGame() {
+
+    gameDisplay.clearMenu();
+    lives = 3;
+    score = 0;
+    for (const block of blocks) {
+        blocks.pop();
+    }
+    setupGameMenu.setupMenu();
+
+}
+
+export { resetGame };
+
 //Controls Display
 
 function drawControls() {
