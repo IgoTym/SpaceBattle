@@ -95,6 +95,37 @@ class GameScreen extends Menu {
 
     }
 
+    saveScore () {
+
+        const saveScoreBox = document.createElement("div");
+        saveScoreBox.setAttribute("class", "menu");
+        saveScoreBox.setAttribute("id", "save-score-box");
+        document.body.appendChild(saveScoreBox);
+
+        const saveScoreForm = document.createElement("form");
+        saveScoreForm.setAttribute("class", "menu");
+        saveScoreForm.setAttribute("id", "save-score-form");
+        saveScoreBox.appendChild(saveScoreForm);
+
+        const playerNameFieldLabel = document.createElement("label");
+        playerNameFieldLabel.setAttribute("for", "player-name-field");
+        playerNameFieldLabel.textContent = "Player Name";
+        saveScoreForm.appendChild(playerNameFieldLabel);
+
+        const playerNameField = document.createElement("input");
+        playerNameField.setAttribute("type", "text");
+        playerNameField.setAttribute("id", "player-name-field");
+        playerNameField.setAttribute("name", "Player Name");
+        saveScoreForm.appendChild(playerNameField);
+
+        const saveButton = document.createElement("button");
+        saveButton.setAttribute("class", "menu-button");
+        saveButton.textContent = "Save";
+        saveScoreForm.appendChild(saveButton);
+
+
+    }
+
 
     gameOver() {
 
@@ -130,12 +161,19 @@ class GameScreen extends Menu {
         restartButton.textContent = "Restart";
         restartButton.addEventListener("click", resetGame);
 
-        const elements = [gameOverPara, finalScore, restartButton];
+        const saveButton = document.createElement("button");
+        saveButton.setAttribute("class", "menu-button");
+        saveButton.textContent = "Save score";
+        saveButton.addEventListener("click", this.saveScore);
+
+        const elements = [gameOverPara, finalScore, restartButton, saveButton];
 
         document.body.appendChild(gameOverScreen);
         for (const element of elements) {
             gameOverScreen.appendChild(element);
         }
+
+
 
     }
 
