@@ -31,6 +31,24 @@ h1 {
     margin: 2em 0em 1em 0em;
 }
 
+label {
+    text-align: center;
+    color: white;
+    font-size: 2em;
+    margin: auto;
+    padding: 0;
+}
+
+input{
+    text-align: center;
+    width: 14em;
+    margin: auto;
+}
+
+form {
+    margin: auto;
+}
+
 #ghost-headline {
     position: absolute;
     z-index: -1;
@@ -135,4 +153,16 @@ h1 {
     color: white;
     margin: 2em auto;
     padding: 0;
+}
+
+#save-score-box {
+    position: absolute;
+    z-index: 2;
+    background-color: black;
+    border: solid 5px white;
+    width: 45em;
+    height: 30em;
+    top: 18em;
+    margin: 0 auto;
+    padding: 1em;
 }

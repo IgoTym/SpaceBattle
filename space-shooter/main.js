@@ -249,6 +249,13 @@ function resetGame() {
 
 export { resetGame };
 
+function saveScore () {
+
+
+}
+
+export { saveScore };
+
 //Controls Display
 
 function drawControls() {
