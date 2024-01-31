@@ -1,4 +1,4 @@
-import { bullets, headline, spaceshipGame, createBlock, pauseFlashing, drawGame, score, lives, resetGame, menu } from "../../main.js";
+import { bullets, db, headline, spaceshipGame, createBlock, pauseFlashing, drawGame, score, lives, resetGame, menu, /*addScore*/ } from "../../main.js";
 import { Bullet } from "./Bullet.js";
 import { Menu } from "../../Menu/Classes/Menu.js";
 
@@ -118,29 +118,34 @@ class GameScreen extends Menu {
         playerNameField.setAttribute("name", "Player Name");
         saveScoreForm.appendChild(playerNameField);
 
-        const saveButton = document.createElement("button");
-        saveButton.setAttribute("class", "menu-button");
-        saveButton.textContent = "Save";
-        saveScoreForm.appendChild(saveButton);
+        const saveScoreButton = document.createElement("button");
+        saveScoreButton.setAttribute("class", "menu-button");
+        saveScoreButton.textContent = "Save";
+        saveScoreForm.appendChild(saveScoreButton);
+        saveScoreButton.addEventListener("click", e => {
 
+            e.preventDefault();
+    
+            const newItem = { name: playerNameField.value, score: score };
+            const transaction = db.transaction(["playerScore_os"], "readwrite");
+            const objectStore = transaction.objectStore("playerScore_os");
+            const addRequest = objectStore.add(newItem);
+
+            addRequest.addEventListener("success", resetGame);
+
+            transaction.addEventListener("complete", () => {
+                console.log("Transaction completed: database modification finished");
+            });
+
+            transaction.addEventListener("error", () => {
+                console.log("Transaction not opened due to error");
+            });
+
+                });
 
     }
 
-
     gameOver() {
-
-        /*const canvas = document.querySelector("canvas");
-        const ctx = canvas.getContext("2d");
-
-        const width = canvas.width;
-        const height = canvas.height;
-
-        ctx.fillStyle = "rgb(0, 0, 0)";
-        ctx.fillRect(0, 0, width, height);
-
-        ctx.fillStyle = "rgb(255, 255, 255)";
-        ctx.font = "90px serif";
-        ctx.fillText("Game over", 430, 400);*/
 
         clearInterval(this.createBlockInterval);
 

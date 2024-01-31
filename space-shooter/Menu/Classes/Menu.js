@@ -13,6 +13,7 @@ class Menu {
         const button = document.querySelector("#go-back");
         const canvas = document.querySelector(".canvas");
         const gameOverScreen = document.querySelector("#game-over-screen");
+        const saveScoreBox = document.querySelector("#save-score-box");
         const livesCounter = document.querySelector("#lives-count");
         const score = document.querySelector("#score-count");
         const pauseFlasher =document.querySelector("#pause-flasher");
@@ -39,6 +40,10 @@ class Menu {
             }
             headline.removeAttribute("id");
 
+        }
+
+        if (saveScoreBox) {
+            document.body.removeChild(saveScoreBox);
         }
 
     }

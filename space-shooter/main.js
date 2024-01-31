@@ -88,6 +88,7 @@ let thirdPlaceScore;
 let db;
 const openRequest = window.indexedDB.open("playerScore_db", 1);
 
+
 //Game screen Variables
 
 let score = 0;
@@ -143,13 +144,13 @@ function addScore(e) {
 
     e.preventDefault();
 
-    const newItem = { title: playerName.value, body: playerScore.value };
+    const newItem = { name: playerNameField.value, score: finalScore.value };
     const transaction = db.transaction(["playerScore_os"], "readwrite");
     const objectStore = transaction.objectStore("playerScore_os");
     const addRequest = objectStore.add(newItem);
 
     addRequest.addEventListener("success", () => {
-        //miejsce na kod odnoszący do okna zpisu wyniku
+        console.log("Score added");
     });
 
     transaction.addEventListener("complete", () => {
@@ -161,6 +162,8 @@ function addScore(e) {
     });
 
 }
+
+export { addScore };
 
 /*function displayScore() {
 }*/
@@ -249,13 +252,6 @@ function resetGame() {
 
 export { resetGame };
 
-function saveScore () {
-
-
-}
-
-export { saveScore };
-
 //Controls Display
 
 function drawControls() {
@@ -301,22 +297,14 @@ openRequest.addEventListener("success", () => {
     db = openRequest.result;
 });
 
-openRequest.addEventListener("upgradeneeded", (e) => {
+openRequest.addEventListener("upgradeneeded", e => {
     db = e.target.result;
-    const objectStore = db.createObjectStore("playerScore_os", {
-        keyPath: "id",
-        autoIncrement: true,
-    });
+    const objectStore = db.createObjectStore("playerScore_os", { kayPath: "id", autoIncrement:true });
 
-    objectStore.createIndex("title", "name", { unique: false});
-    objectStore.createIndex("body", "score", { unique: false});
+    objectStore.createIndex("name", "name", { unique: false});
+    objectStore.createIndex("score", "score", { unique: false});
 
     console.log("Database setup complete");
 });
 
-//Event listeners - canvas
-
-
-
-//Event listeners - sounds
-
+export { db };
