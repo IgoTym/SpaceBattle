@@ -165,8 +165,25 @@ function addScore(e) {
 
 export { addScore };
 
-/*function displayScore() {
-}*/
+function displayScore() {
+
+    const objectStore = db.transaction("playerScore_os").objectStore("playerScore_os");
+    objectStore.openCursor().addEventListener("success", (e) => {
+
+        const cursor = e.target.result;
+
+        if (cursor) {
+
+            console.log(`${cursor.value.id}`);
+
+        }
+        
+
+    });
+
+}
+
+export { displayScore };
 
 //Functions - sounds
 
@@ -299,7 +316,7 @@ openRequest.addEventListener("success", () => {
 
 openRequest.addEventListener("upgradeneeded", e => {
     db = e.target.result;
-    const objectStore = db.createObjectStore("playerScore_os", { kayPath: "id", autoIncrement:true });
+    const objectStore = db.createObjectStore("playerScore_os", { keyPath: "id", autoIncrement: true });
 
     objectStore.createIndex("name", "name", { unique: false});
     objectStore.createIndex("score", "score", { unique: false});

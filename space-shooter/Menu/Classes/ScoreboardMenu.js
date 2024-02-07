@@ -1,5 +1,5 @@
 import { Menu } from "./Menu.js";
-import { menu, headline, clearAnyMenu } from "../../main.js";
+import { menu, headline, clearAnyMenu, displayScore } from "../../main.js";
 
 class ScoreboardMenu extends Menu {
 
@@ -74,9 +74,9 @@ class ScoreboardMenu extends Menu {
         goBack = document.querySelector("#go-back");
 
         //firstPlaceName.textContent = "Adam";
-        //firstPlaceScore.textContent = 90;
+        //firstPlaceScore.textContent = 90;*/
 
-        //displayScore();*/
+        displayScore();
 
         
 
